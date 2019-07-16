@@ -13,7 +13,6 @@ class chatbot(object):
         self.query_extraction = Extractor()
         self.graph_search = graph_search()
         self.result_modify = result_modify()
-        # self.intent = intent()
 
     def run(self, user_input):
 
@@ -25,9 +24,13 @@ class chatbot(object):
         current_state, branch = state_control.step()
         ner_res = self.query_extraction.ner_trans(ner_res)
         intent_res = self.query_extraction.intent_trans(intent_res, ner_res, branch)
-        result = self.graph_search.run(intent_res, ner_res, self.session_manage.session_info)
-        #result = result_modify.run(result)
-        #self.session_manage.update_a(intent_res,ner_res,result)
+        #print(intent_res,ner_res)
+        try:
+            result = self.graph_search.run(intent_res, ner_res, self.session_manage.session_info)
+            result = self.result_modify.run(intent_res,ner_res,result)
+        except:
+            result = None
+        self.session_manage.update_a(result)
         return result
 
 
@@ -36,5 +39,22 @@ if __name__ == '__main__':
 
     while True:
         #print(chatbot.session_manage.session_info)
-        user_input = input('Plz Enter: ')
-        print(chatbot.run(user_input))
+        user_input = input('用户: ')
+        if user_input == 'exit':
+            break
+        print('智能客服: ' + str(chatbot.run(user_input)))
+
+# '我妈得了甲亢能买平安福吗'
+# '平安福的犹豫期是多久'
+# 'e生保的投保年龄'
+# '平安福都保障什么疾病'
+# '我爸爸60岁了能投保e生保吗？'
+# '我爸爸48岁了能投保e生保吗？'
+# '平安福的等待期是多少'
+# 'e生保每年需要交多少钱'
+# '我买e生保可以保障多久'
+# '我16岁可以买哪些保险'
+
+# '我得了癌症还可以买哪些保险'
+# '我得了癌症还可以买什么类型的产品'
+# '你们卖的最贵的保险是哪个'

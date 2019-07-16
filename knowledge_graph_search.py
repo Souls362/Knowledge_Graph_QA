@@ -118,13 +118,12 @@ class graph_search(object):
         if self.intent_ner_validation(intent,ner) == None:
             # return 'intent & ner not match'
             return None
-        if intent[0] == '1':
+        if intent[0] == '1' or intent == '21' or intent == '22':
             return self.find_attribute(intent,ner)
-        else:
-            if intent == '31' or intent == '41':
-                return self.recommend_product(intent,ner)
-            elif intent[0:2] == '23':
-                return self.find_underwriting(intent, ner, session_info)
+        if intent == '31' or intent == '41':
+            return self.recommend_product(intent,ner)
+        if intent[0:2] == '23':
+            return self.find_underwriting(intent, ner, session_info)
 
 
 if __name__ == '__main__':

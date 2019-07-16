@@ -1,6 +1,6 @@
 from intent_recognition import IntentRecognizer
 from ner_knowledge_graph.ner_combine import ner as ner_py
-from result_trans import result_trans
+from ner_trans import result_trans
 import re
 
 class StateControl(object):
@@ -15,8 +15,8 @@ class StateControl(object):
         '''
         branch = None
         if self.prev_state['intent'] == '核保' and self.intent == 'null_intent':
-            yes_res = re.search('(是|对)+', self.sentence)
-            no_res = re.search('(否|不是|不对|错)+', self.sentence)
+            yes_res = re.search('(有|是|对)+', self.sentence)
+            no_res = re.search('(否|不是|不对|错|无)+', self.sentence)
             if yes_res or no_res:
                 current_state = self.prev_state
                 if yes_res:
@@ -123,12 +123,14 @@ if __name__ == '__main__':
     query_extraction = Extractor()
 
     test_list = [
-            ['我妈得了甲亢能买平安福吗', 1, ["disease", 'product']],
+            ['我妈得了甲亢能买平安福吗', 1, ["disease", 'product']],    #
             ['我妈得了癌症能买平安福吗', 1, ["disease", 'product']],
             ['平安福的犹豫期是多久',0,['product']],
             ['e生保的投保年龄',0,['product']],
             ['平安福都保障什么疾病',0,['product']],
+
             ['我爸爸60岁了能投保e生保吗？',1,['age','product']],
+
             ['平安福的等待期是多少',0,['product']],
             ['e生保每年需要交多少钱',0,['product']],
             ['我买e生保可以保障多久', 0, ['product']],

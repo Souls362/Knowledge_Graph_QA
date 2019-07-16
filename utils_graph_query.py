@@ -294,6 +294,9 @@ def check_disease_satisfy_insurance_dialogue(graph,answer,node,insurance_type):
     if result['status_type'] == "end":
         result = graph.run('match(n {name:"'+current_name+'", disease:"'+current_disease+'"})-[:`'+'核保结果-'+insurance_type[0]+'-'+answer+'`]->(a) return a')
         result = [i for i in result][0]['a']
+        if result['name'] == '统一回复':
+            result = graph.run('match(n {name:"' + current_disease + '"})-[:`疾病.投保建议`]->(a) return a')
+            result = [i for i in result][0]['a']
         return(result,'end')
 # print(check_disease_satisfy_insurance_dialogue(graph,'否',node,'寿险'))
 
