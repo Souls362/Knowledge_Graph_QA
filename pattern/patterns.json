@@ -1,0 +1,176 @@
+{
+	"components":
+	{
+		"time":
+			["多久","多长时间","多长","时间","期限","时长"],
+		"insr":
+			["保","保障","保险","涵盖","覆盖","包含"],
+		"claim":
+			["报销","赔付"],
+		"age":
+			["岁","年龄","多大","几岁"],
+		"cover":
+			["范围","哪些","阶段","什么"],
+		"product":
+			["产品", "款", "保险"],
+		"insr_kind":
+			["险种", "类型"],
+		"buy":
+			["投保","购买","买","投"],
+		"price":
+			["价格","多少钱","花多少","费用","花销","多贵"],
+		"price_high":
+			["最贵", "价格最高","花费最高"],
+		"price_low":
+			["最便宜", "价格最低", "花费最低"],
+		"disease":
+			["疾病","意外","伤害","患病","生病","手术","病","患","症","疾"],
+		"heisitation":
+			["犹豫期"],
+		"wait":
+			["等待期"]
+	},
+	"pattern":
+	{
+		"attributes":
+		{
+			"产品价格":
+			{
+				"components":
+					["product", "price"],
+				"ner":
+					["product"],
+				"ambiguous":
+					"产品价格"
+			},
+			"犹豫期":
+			{
+				"components":
+					["product", "heisitation"],
+				"ner":
+					["product"],
+				"ambiguous":
+					"犹豫期"
+			},
+
+			"等待期":
+			{
+				"components":
+					["wait", "product"],
+				"ner":
+					["product"],
+				"ambiguous":
+					"等待期"
+			},
+			"保障期限":
+			{
+				"components":
+					["insr", "time"],
+				"ner":
+					["product"],
+				"ambiguous":
+					"保障期限"
+			},
+			"年龄":
+			{
+				"components":
+					["product","age"],
+				"ner":
+					["product"],
+				"ambiguous":
+					"年龄"
+			},
+			"保障范围":
+			{
+				"components":
+					["product", "insr", "cover"],
+				"ner":
+					["product"],
+				"ambiguous":
+					"保障范围"
+			},
+
+			"疾病_险种":
+			{
+				"components":
+					["disease", "insr_kind", "buy"],
+				"ner":
+					["disease"],
+				"ambiguous":
+					"核保"
+			},
+			"年龄_产品":
+			{
+				"components":
+					["product","age","buy"],
+				"ner":
+					["age"],
+				"ambiguous":
+					"核保"
+			},
+			"年龄_险种":
+			{
+				"components":
+					["insr_kind","age","buy"],
+				"ner":
+					["age"],
+				"ambiguous":
+					"核保"
+			},
+
+
+			"疾病_产品":
+			{
+				"components":
+					["disease", "buy", "product"],
+				"ner":
+					["disease"],
+				"ambiguous":
+					"核保"
+			},
+
+			"价格_high_保险":
+			{
+				"components":
+					["price_high", "product"],
+				"ner":
+					[],
+				"ambiguous":
+					"价格_high_保险"
+			},
+
+			"价格_low_保险":
+			{
+				"components":
+					["price_low", "product"],
+				"ner":
+					[],
+				"ambiguous":
+					"价格_low_保险"
+			}
+		},
+		"check":
+		{
+			"核保_年龄":
+			{
+				"components":
+					["age","product"],
+				"ner":
+					["age","product"],
+				"ambiguous":
+					"核保"
+			},
+			"核保_疾病":
+			{
+				"components":
+					["disease", "product"],
+				"ner":
+					["disease","product"],
+				"ambiguous":
+					"核保"
+			}
+		}
+	},
+	"ner":
+		["disease","age","disease"]
+}
